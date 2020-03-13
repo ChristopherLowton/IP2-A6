@@ -20,7 +20,6 @@ import javafx.stage.Stage;
  *
  * @author Chris
  */
-//test
 public class IP2A6 extends Application {
 
     @Override
