@@ -30,7 +30,7 @@
             <Button layoutX="128.0" layoutY="309.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="86.0" text="Medium " />
             <ButtonBar layoutX="207.0" layoutY="321.0" prefHeight="40.0" prefWidth="200.0" />
             <Button layoutX="128.0" layoutY="361.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="86.0" text="Hard" />
-            <Button layoutX="710.0" layoutY="21.0" mnemonicParsing="false" onAction="#logoutButtonPushed" prefHeight="27.0" prefWidth="77.0" text="Logout" />
+            <Button fx:id="logout" layoutX="710.0" layoutY="21.0" mnemonicParsing="false" onAction="#logoutButtonPushed" prefHeight="27.0" prefWidth="77.0" text="Logout" />
             <Button layoutX="694.0" layoutY="558.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Cancel" />
          </children>
       </Pane>
