@@ -16,6 +16,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import java.sql.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 
 /**
  *
@@ -38,14 +41,50 @@ public class LoginController {
     @FXML
     private TextField registerPassword;
     
+    Connection conn = null;
+    PreparedStatement pst= null;
+    ResultSet rs= null;
+    
+    
     @FXML
     private void login(ActionEvent event) throws SQLException, IOException {
-        if (loginUsername.getText().equals("test") && loginPassword.getText().equals("test")) {
+        
+         conn = SqlConnect.ConnectDB();
+        String Sql = "Select * from logindatabase where username=? and password=?";
+        try{
+            pst= conn.prepareStatement(Sql);
+            pst.setString(1, loginUsername.getText());
+            pst.setString(2, loginPassword.getText());
+            rs=pst.executeQuery();
+            if(rs.next()) {
+                Parent root = FXMLLoader.load(getClass().getResource("/Views/Question.fxml"));
+                loginButton.getScene().setRoot(root);
+            }
+            else{
+                Alert alert= new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invalid");
+                alert.setHeaderText(null);
+                alert.setContentText("Invalid Username or Password");
+                alert.showAndWait();
+            }
+            conn.close();
+        } catch(Exception e) {
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+       /* if (loginUsername.getText().equals("test") && loginPassword.getText().equals("test")) {
             //TODO: Link to database
             System.out.println("User logged in.");
             Parent root = FXMLLoader.load(getClass().getResource("/Views/Question.fxml"));
             loginButton.getScene().setRoot(root);
-        }
+        } */
     }
     
     @FXML
