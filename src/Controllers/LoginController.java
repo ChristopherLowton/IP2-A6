@@ -35,7 +35,7 @@ public class LoginController {
     @FXML
     private TextField registerFirstname;
     @FXML
-    private TextField registerLastNname;
+    private TextField registerLastname;
     @FXML
     private TextField registerUsername;
     @FXML
@@ -89,7 +89,39 @@ public class LoginController {
     
     @FXML
     private void register(ActionEvent event) throws SQLException {
-        User user = new User();
+        String firstName = registerFirstname.getText();
+        String lastName = registerLastname.getText();
+        String username = registerUsername.getText();
+        String password = registerPassword.getText();
+        
+        PreparedStatement ps;
+        ResultSet rs;
+        String registerUserQuery = "INSERT INTO `logindatabase`(`first_name`, `last_name`, `username`, `password`) VALUES (?,?,?,?)";
+        
+        ps = SqlConnect.ConnectDB().prepareStatement(registerUserQuery);
+        ps.setString(1, firstName);
+        ps.setString(2, lastName);
+        ps.setString(3, username);
+        ps.setString(4, password);
+        
+        if(ps.executeUpdate() !=0){
+            Alert alert= new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Confirmed");
+                alert.setHeaderText(null);
+                alert.setContentText("Your account has been created");
+                alert.showAndWait(); 
+        }
+        else {
+            Alert alert= new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Error: Check your information");
+                alert.showAndWait(); 
+        }
+            
+        
+        
+        
         //TODO: Implement register
     }
     
