@@ -1,6 +1,9 @@
 package Controllers;
 
 import Models.User;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import javafx.application.Application;
@@ -43,6 +46,37 @@ public class QuestionController {
     private CheckBox answerD;
     @FXML
     private Button next;
+    @FXML
+    private Button cancel;
+    
+    Connection conn = null;
+    PreparedStatement pst= null;
+    ResultSet rs= null;
+    
+    @FXML
+    public void easyCat() throws SQLException {
+        conn = SqlConnect.ConnectDB();
+        //for(int i=1;i<11;i++) 
+        String Sql = "Select * from easyCat_DB where question_id=2 "; 
+        pst = conn.prepareStatement(Sql);
+        //pst.setString(1, q.getText());
+        rs=pst.executeQuery(); 
+        
+        if(rs.next()){
+            String Question = rs.getString("question_desc");
+            String ansA = rs.getString("answer_A");
+            String ansB = rs.getString("answer_B");
+            String ansC = rs.getString("answer_C");
+            String ansD = rs.getString("answer_D");
+            question.setText(Question);
+            answerA.setText(ansA);
+            answerB.setText(ansB);
+            answerC.setText(ansC);
+            answerD.setText(ansD);
+            }
+        
+    }
+    
     
     @FXML
     private void logout(ActionEvent event) throws SQLException, Exception {
@@ -71,14 +105,9 @@ public class QuestionController {
         
        
     }  
-    
-    @FXML
-    private void register(ActionEvent event) throws SQLException {
-        User user = new User();
-        //TODO: Implement register
-    }
-    
-    private void showLoginFailed() {
-        //TODO: Show login failed message
-    }
 }
+    
+    
+
+  
+
