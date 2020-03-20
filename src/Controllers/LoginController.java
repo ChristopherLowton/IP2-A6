@@ -69,7 +69,7 @@ public class LoginController {
             }
             conn.close();
         } catch(Exception e) {
-            
+            System.out.println(e);
             
         }
         
