@@ -5,6 +5,7 @@
  */
 package ip2.a6;
 
+import Controllers.SceneManager;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -28,7 +29,10 @@ public class IP2A6 extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/Views/Login.fxml"));
         
         Scene scene = new Scene(root);
-
+        
+        SceneManager sceneManager = new SceneManager();
+        sceneManager.setScene(scene);
+        
         primaryStage.setTitle("Login");
         primaryStage.setScene(scene);
         primaryStage.show();

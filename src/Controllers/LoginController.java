@@ -17,115 +17,63 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import java.sql.*;
+import java.util.Optional;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 
 /**
  *
  * @author Chris
-
+ *
  */
 public class LoginController {
+
     @FXML
     private Button loginButton;
     @FXML
-    private TextField loginUsername;
+    private TextField loginEmail;
     @FXML
     private TextField loginPassword;
     @FXML
-    private TextField registerFirstname;
+    private TextField registerFirstName;
     @FXML
-    private TextField registerLastname;
+    private TextField registerLastName;
     @FXML
-    private TextField registerUsername;
+    private TextField registerEmail;
     @FXML
     private TextField registerPassword;
-    
-    Connection conn = null;
-    PreparedStatement pst= null;
-    ResultSet rs= null;
-    
-    
+
+    Sql sql = new Sql();
+    SceneManager scene = new SceneManager();
+
     @FXML
     private void login(ActionEvent event) throws SQLException, IOException {
-        
-         conn = SqlConnect.ConnectDB();
-        String Sql = "Select * from logindatabase where username=? and password=?";
-        try{
-            pst= conn.prepareStatement(Sql);
-            pst.setString(1, loginUsername.getText());
-            pst.setString(2, loginPassword.getText());
-            rs=pst.executeQuery();
-            if(rs.next()) {
-                Parent root = FXMLLoader.load(getClass().getResource("/Views/Question.fxml"));
-                loginButton.getScene().setRoot(root);
-            }
-            else{
-                Alert alert= new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Invalid");
-                alert.setHeaderText(null);
-                alert.setContentText("Invalid Username or Password");
-                alert.showAndWait();
-            }
-            conn.close();
-        } catch(Exception e) {
-            System.out.println(e);
-            
+        if (sql.validateLogin(loginEmail.getText(), loginPassword.getText())) {
+            scene.switchScene("ChooseCategory");
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Invalid", "Invalid email or password.");
         }
-        
-        
-        
-        
-        
-        
-        
-       /* if (loginUsername.getText().equals("test") && loginPassword.getText().equals("test")) {
-            //TODO: Link to database
-            System.out.println("User logged in.");
-            Parent root = FXMLLoader.load(getClass().getResource("/Views/Question.fxml"));
-            loginButton.getScene().setRoot(root);
-        } */
     }
-    
+
     @FXML
     private void register(ActionEvent event) throws SQLException {
-        String firstName = registerFirstname.getText();
-        String lastName = registerLastname.getText();
-        String username = registerUsername.getText();
-        String password = registerPassword.getText();
-        
-        PreparedStatement ps;
-        ResultSet rs;
-        String registerUserQuery = "INSERT INTO `logindatabase`(`first_name`, `last_name`, `username`, `password`) VALUES (?,?,?,?)";
-        
-        ps = SqlConnect.ConnectDB().prepareStatement(registerUserQuery);
-        ps.setString(1, firstName);
-        ps.setString(2, lastName);
-        ps.setString(3, username);
-        ps.setString(4, password);
-        
-        if(ps.executeUpdate() !=0){
-            Alert alert= new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Confirmed");
-                alert.setHeaderText(null);
-                alert.setContentText("Your account has been created");
-                alert.showAndWait(); 
+        if (sql.registerUser(registerFirstName.getText(), registerLastName.getText(), registerEmail.getText(), registerPassword.getText())) {
+            registerFirstName.clear();
+            registerLastName.clear();
+            registerEmail.clear();
+            registerPassword.clear();
+            showAlert(Alert.AlertType.INFORMATION, "Success", "You have successfully registered.");
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Error", "Error: Check your information.");
         }
-        else {
-            Alert alert= new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Error: Check your information");
-                alert.showAndWait(); 
-        }
-            
-        
-        
-        
-        //TODO: Implement register
     }
-    
-    private void showLoginFailed() {
-        //TODO: Show login failed message
+
+    private Optional<ButtonType> showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        return alert.showAndWait();
     }
 }

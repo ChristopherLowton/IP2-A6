@@ -34,7 +34,7 @@
                         <Font size="25.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="loginUsername" layoutX="103.0" layoutY="216.0" promptText="Username" />
+                  <TextField fx:id="loginEmail" layoutX="103.0" layoutY="216.0" promptText="Email" />
                   <PasswordField fx:id="loginPassword" layoutX="103.0" layoutY="281.0" promptText="Password" />
                   <Button fx:id="loginButton" layoutX="132.0" layoutY="507.0" mnemonicParsing="false" onAction="#login" prefHeight="27.0" prefWidth="132.0" text="Login" />
                </children>
@@ -47,9 +47,9 @@
                         <Font size="21.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="registerFirstname" layoutX="108.0" layoutY="187.0" promptText="First name" />
-                  <TextField fx:id="registerLastname" layoutX="108.0" layoutY="241.0" promptText="Surname" />
-                  <TextField fx:id="registerUsername" layoutX="108.0" layoutY="294.0" promptText="Username" />
+                  <TextField fx:id="registerFirstName" layoutX="108.0" layoutY="187.0" promptText="First name" />
+                  <TextField fx:id="registerLastName" layoutX="108.0" layoutY="241.0" promptText="Surname" />
+                  <TextField fx:id="registerEmail" layoutX="108.0" layoutY="294.0" promptText="Email" />
                   <PasswordField fx:id="registerPassword" layoutX="108.0" layoutY="355.0" promptText="Password" />
                </children>
             </AnchorPane>

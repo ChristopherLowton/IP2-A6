@@ -1,7 +1,6 @@
 package Controllers;
 
 import Models.Question;
-import Models.User;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,9 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,9 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javax.annotation.Resources;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -57,49 +51,31 @@ public class QuestionController implements Initializable {
     @FXML
     private Button cancel;
 
+    private Sql sql = new Sql();
+    private SceneManager scene = new SceneManager();
+    
     private int currentQuestionIndex = -1;
     private ArrayList<Question> questions;
 
-    Connection conn = null;
-    PreparedStatement pst = null;
-    ResultSet rs = null;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        easyCat();
     }
-
-    @FXML
-    public void easyCat() {
-        try {
-            conn = SqlConnect.ConnectDB();
-            String Sql = "Select * from easyCat_DB";
-            pst = conn.prepareStatement(Sql);
-            rs = pst.executeQuery();
-
-            questions = new ArrayList<Question>();
-            while (rs.next()) {
-                Question q = new Question(rs.getInt(1),
-                        rs.getString("question_desc"),
-                        rs.getString("answer_A"),
-                        rs.getString("answer_B"),
-                        rs.getString("answer_C"),
-                        rs.getString("answer_D"),
-                        rs.getString("correct_answer"));
-                questions.add(q);
-            }
-            next();
-        } catch (SQLException ex) {
-            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    
+    public void beginQuiz(int categoryId) {
+        getQuestions(categoryId);
+        next();
     }
-
+    
+    public void getQuestions(int categoryId) {
+        questions = sql.getQuestions(categoryId);
+    }
+    
     @FXML
     public void next() {
         Question q = null;
         if (this.currentQuestionIndex < 0) {
-            if (this.questions == null) {
-                this.easyCat();
+            if (this.questions == null && this.questions.isEmpty() == false) {
+                System.out.println("No Questions");
             }
             q = this.questions.get(0);
         } else {
@@ -117,35 +93,22 @@ public class QuestionController implements Initializable {
 
     @FXML
     private void displayQuestion(Question q) {
-        this.question.setText(q.getDescription());
-        this.answerA.setText(q.getAnswerA());
-        this.answerB.setText(q.getAnswerB());
-        this.answerC.setText(q.getAnswerC());
-        this.answerD.setText(q.getAnswerD());
+        this.question.setText(q.getText());
     }
 
     @FXML
     private void logout(ActionEvent event) throws SQLException, Exception {
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirm?");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you ok with this?");
-        Optional<ButtonType> result = alert.showAndWait();
+        Optional<ButtonType> result = showAlert(Alert.AlertType.CONFIRMATION, "Confirm logout", "Are you sure you want to logout?");
         if (result.get() == ButtonType.OK) {
-            // ... user chose OK
-            // (new FXMLLoader(getClass().getResource("/Views/Login.fxml"))).load();
-
-            Parent loginParent = FXMLLoader.load(getClass().getResource("/Views/Login.fxml"));
-            Scene loginScene = new Scene(loginParent);
-
-            Stage loginPage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            loginPage.setScene(loginScene);
-            loginPage.show();
-        } else {
-            // ... user chose CANCEL or closed the dialog
+            this.scene.switchScene("Login");
         }
-
+    }
+    
+    private Optional<ButtonType> showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        return alert.showAndWait();
     }
 }
