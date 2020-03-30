@@ -7,16 +7,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="617.0" prefWidth="813.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="ip2fxml.ReviewAnsController">
+<AnchorPane id="AnchorPane" prefHeight="617.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ReviewAnswersController">
    <children>
       <AnchorPane prefHeight="617.0" prefWidth="813.0">
          <children>
-            <TableView layoutX="133.0" layoutY="234.0" prefHeight="291.0" prefWidth="574.0">
+            <TableView fx:id="table" editable="true" layoutX="133.0" layoutY="234.0" prefHeight="291.0" prefWidth="574.0">
               <columns>
-                <TableColumn prefWidth="196.0" text="Questions" />
-                <TableColumn prefWidth="174.0" text="Answer selected" />
-                  <TableColumn prefWidth="202.0" text="Right/Wrong" />
+                <TableColumn fx:id="questionColumn" prefWidth="381.0" text="Questions" />
+                <TableColumn fx:id="answerColumn" prefWidth="99.0" text="Answer selected" />
+                  <TableColumn fx:id="correctColumn" prefWidth="92.0" text="Right/Wrong" />
               </columns>
             </TableView>
          </children>
@@ -28,7 +27,7 @@
       </Text>
       <Button layoutX="720.0" layoutY="31.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Logout" />
       <Button layoutX="606.0" layoutY="569.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="83.0" text="Top scores" />
-      <Button layoutX="704.0" layoutY="568.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Try again?" />
+      <Button fx:id="restartQuiz" layoutX="704.0" layoutY="568.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Try again?" />
       <Text fill="#ffa535" fontSmoothingType="LCD" layoutX="121.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Review Answers" textAlignment="CENTER" wrappingWidth="590.22900390625">
          <font>
             <Font name="Arial" size="79.0" />

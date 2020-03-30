@@ -5,28 +5,25 @@
  */
 package Models;
 
-import java.util.ArrayList;
-
 /**
  *
- * @author Chris
+ * @author Crizzil
  */
-public class Question {
-
+public class Answer {
     private int id;
-    private int categoryId;
+    private int questionId;
     private String text;
+    private boolean correct;
     
-    private ArrayList<Answer> answers;
-
-    public Question() {
+    public Answer() {
         //Default constructor
     }
 
-    public Question(int id, int categoryId, String text) {
+    public Answer(int id, int questionId, String text, boolean correct) {
         this.id = id;
-        this.categoryId = categoryId;
+        this.questionId = questionId;
         this.text = text;
+        this.correct = correct;
     }
 
     public int getId() {
@@ -34,18 +31,14 @@ public class Question {
     }
     
     public int getCategoryId() {
-        return this.categoryId;
+        return this.questionId;
     }
     
     public String getText() {
         return this.text;
     }
     
-    public ArrayList<Answer> getAnswers() {
-        return this.answers;
-    }
-    
-    public void setAnswers(ArrayList<Answer> answers) {
-        this.answers = answers;
+    public boolean isCorrect() {
+        return this.correct;
     }
 }

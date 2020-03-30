@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Controllers;
+import Models.Answer;
 import Models.Question;
 import java.sql.*;
 import java.util.ArrayList;
@@ -39,6 +40,27 @@ public class Sql {
                 questions.add(q);
             }
             return questions;
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public ArrayList<Answer> getAnswers(int questionId) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM answers WHERE QuestionId=?");
+            pst.setInt(1, questionId);
+            ResultSet rs = pst.executeQuery();
+            
+            ArrayList<Answer> answers = new ArrayList<Answer>();
+            while (rs.next()) {
+                Answer q = new Answer(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString("Text"),
+                        rs.getBoolean("Correct"));
+                answers.add(q);
+            }
+            return answers;
         } catch (SQLException ex) {
             Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
             return null;
