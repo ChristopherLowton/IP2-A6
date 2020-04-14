@@ -37,6 +37,7 @@
                   <TextField fx:id="loginEmail" layoutX="103.0" layoutY="216.0" promptText="Email" />
                   <PasswordField fx:id="loginPassword" layoutX="103.0" layoutY="281.0" promptText="Password" />
                   <Button fx:id="loginButton" layoutX="132.0" layoutY="507.0" mnemonicParsing="false" onAction="#login" prefHeight="27.0" prefWidth="132.0" text="Login" />
+                  <Button fx:id="testManager" layoutX="25.0" layoutY="28.0" mnemonicParsing="false" onAction="#testManage" text="test manager" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="377.0" style="-fx-background-color: #EAF2F8#EAF2F8;">

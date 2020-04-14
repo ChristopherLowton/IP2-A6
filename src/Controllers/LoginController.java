@@ -30,6 +30,9 @@ import javafx.scene.control.PasswordField;
 public class LoginController {
 
     @FXML
+    private Button testManager;
+    
+    @FXML
     private Button loginButton;
     @FXML
     private TextField loginEmail;
@@ -76,4 +79,13 @@ public class LoginController {
         alert.setContentText(message);
         return alert.showAndWait();
     }
+    
+    
+    
+    
+    @FXML
+    private void testManage(ActionEvent event) throws IOException {
+        scene.switchScene("ManagerLandingPage");
+    }
+    
 }

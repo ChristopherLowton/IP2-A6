@@ -19,11 +19,14 @@
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <TextArea fx:id="question" editable="false" layoutX="105.0" layoutY="173.0" prefHeight="94.0" prefWidth="597.0" wrapText="true" />
-            <CheckBox fx:id="answerA" layoutX="111.0" layoutY="318.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="107.0" text="CheckBox" />
-            <CheckBox fx:id="answerB" layoutX="111.0" layoutY="356.0" mnemonicParsing="false" text="CheckBox" />
-            <CheckBox fx:id="answerC" layoutX="111.0" layoutY="394.0" mnemonicParsing="false" text="CheckBox" />
-            <CheckBox fx:id="answerD" layoutX="111.0" layoutY="433.0" mnemonicParsing="false" text="CheckBox" />
+            <TextArea fx:id="question" disable="true" editable="false" layoutX="105.0" layoutY="173.0" opacity="0.72" prefHeight="94.0" prefWidth="597.0" style="-fx-background-color: transparent;" wrapText="true">
+               <font>
+                  <Font size="24.0" />
+               </font></TextArea>
+            <CheckBox fx:id="answerA" layoutX="111.0" layoutY="318.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="302.0" text="CheckBox" />
+            <CheckBox fx:id="answerB" layoutX="111.0" layoutY="356.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="302.0" text="CheckBox" />
+            <CheckBox fx:id="answerC" layoutX="111.0" layoutY="394.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="302.0" text="CheckBox" />
+            <CheckBox fx:id="answerD" layoutX="111.0" layoutY="433.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="302.0" text="CheckBox" />
          </children>
       </Pane>
       <Text layoutX="236.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FDM maths quiz" textAlignment="CENTER" wrappingWidth="360.22900390625">

@@ -5,9 +5,11 @@
  */
 package Controllers;
 import Models.Answer;
+import Models.Category;
 import Models.Question;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -103,4 +105,46 @@ public class Sql {
             return false;
         }
     }
-}
+       
+        public ArrayList<Integer> seacrhCatId(String tempCat) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM categories where Title=?");
+            pst.setString(1, tempCat);
+            ResultSet rs = pst.executeQuery();
+            ArrayList<Integer> idList = new ArrayList<>();
+            while(rs.next()) {
+                int tempId = rs.getInt("CategoryID");
+                idList.add(tempId);
+            }
+            return idList;
+        } catch (SQLException ex) {
+            Logger.getLogger(Sql.class.getName()).log(Level.SEVERE, null, ex);
+        } return null;
+        }
+        
+        public ArrayList<Integer> searchQId(String tempQText) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("Select * From questions where Text=?");
+            pst.setString(1, tempQText);
+            ResultSet rs = pst.executeQuery();
+            ArrayList<Integer> qIdList = new ArrayList<>();
+            while(rs.next()) {
+                int tempQId = rs.getInt("QuestionID");
+                qIdList.add(tempQId);
+            }
+            return qIdList;
+        } catch (SQLException ex) {
+            Logger.getLogger(Sql.class.getName()).log(Level.SEVERE, null, ex);
+        }   return null;
+                
+                }
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+
