@@ -7,10 +7,15 @@ package Controllers;
 
 import Models.ResultSet;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -53,5 +58,27 @@ public class ReviewAnswersController {
     public void restartQuiz() throws IOException {
         scene.switchScene("Question");
         ((QuestionController) scene.getLoader().getController()).beginQuiz(this.categoryId);
+    }
+    
+    @FXML
+    public void topScores() throws IOException {
+        scene.switchScene("TopScores");
+        ((TopScoresController) scene.getLoader().getController()).showScores(this.results, this.categoryId);
+    }
+    
+    @FXML
+    private void logout(ActionEvent event) throws SQLException, Exception {
+        Optional<ButtonType> result = showAlert(Alert.AlertType.CONFIRMATION, "Confirm logout", "Are you sure you want to logout?");
+        if (result.get() == ButtonType.OK) {
+            this.scene.switchScene("Login");
+        }
+    }
+    
+    private Optional<ButtonType> showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        return alert.showAndWait();
     }
 }

@@ -16,31 +16,31 @@
             <Font name="Didot" size="32.0" />
          </font>
       </Text>
-      <Text fill="#3f36ff" fontSmoothingType="LCD" layoutX="122.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manager Account" textAlignment="CENTER" wrappingWidth="590.22900390625">
+      <Text fill="#3f36ff" fontSmoothingType="LCD" layoutX="125.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manager Account" textAlignment="CENTER" wrappingWidth="590.22900390625">
          <font>
             <Font name="Arial Black" size="48.0" />
          </font>
       </Text>
-      <Text fill="#8d8d8d" layoutX="279.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create or edit question" wrappingWidth="220.337646484375">
+      <Text layoutX="299.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create or edit question" wrappingWidth="235.337646484375">
          <font>
-            <Font name="System Italic" size="22.0" />
+            <Font size="22.0" />
          </font>
       </Text>
-      <Button fx:id="saveButton" layoutX="352.0" layoutY="536.0" mnemonicParsing="false" onAction="#saveQuestionAnswer" prefHeight="27.0" prefWidth="80.0" text="Add" />
-      <Button layoutX="470.0" layoutY="177.0" mnemonicParsing="false" onAction="#populateQuestionAns" prefHeight="27.0" prefWidth="80.0" text="Load Data" />
+      <Button fx:id="saveButton" layoutX="288.0" layoutY="535.0" mnemonicParsing="false" onAction="#saveQuestionAnswer" prefHeight="27.0" prefWidth="80.0" text="Add" />
+      <Button layoutX="521.0" layoutY="177.0" mnemonicParsing="false" onAction="#populateQuestionAns" prefHeight="27.0" prefWidth="80.0" text="Load Data" />
       <Button layoutX="720.0" layoutY="21.0" mnemonicParsing="false" onAction="#logout" prefHeight="27.0" prefWidth="77.0" text="Logout" />
-      <TextField fx:id="ansAText" layoutX="172.0" layoutY="281.0" prefHeight="27.0" prefWidth="434.0" promptText="Answer A" />
-      <TextField fx:id="ansBText" layoutX="172.0" layoutY="318.0" prefHeight="27.0" prefWidth="433.0" promptText="Answer B" />
-      <TextField fx:id="ansDText" layoutX="169.0" layoutY="401.0" prefHeight="27.0" prefWidth="434.0" promptText="Answer D" />
-      <TextField fx:id="ansCText" layoutX="171.0" layoutY="358.0" prefHeight="27.0" prefWidth="433.0" promptText="Answer C" />
+      <TextField fx:id="ansAText" layoutX="172.0" layoutY="282.0" prefHeight="27.0" prefWidth="434.0" promptText="Answer A" />
+      <TextField fx:id="ansBText" layoutX="172.0" layoutY="324.0" prefHeight="27.0" prefWidth="433.0" promptText="Answer B" />
+      <TextField fx:id="ansDText" layoutX="171.0" layoutY="410.0" prefHeight="27.0" prefWidth="434.0" promptText="Answer D" />
+      <TextField fx:id="ansCText" layoutX="172.0" layoutY="366.0" prefHeight="27.0" prefWidth="433.0" promptText="Answer C" />
       <Button layoutX="535.0" layoutY="460.0" mnemonicParsing="false" onAction="#next" prefHeight="27.0" prefWidth="68.0" text="next&gt;" />
-      <ChoiceBox fx:id="catChoice" layoutX="296.0" layoutY="177.0" prefHeight="27.0" prefWidth="150.0" />
-      <Label layoutX="193.0" layoutY="183.0" prefHeight="17.0" prefWidth="102.0" text="Choose Category" />
+      <ChoiceBox fx:id="catChoice" layoutX="317.0" layoutY="177.0" prefHeight="27.0" prefWidth="150.0" />
+      <Label layoutX="172.0" layoutY="182.0" prefHeight="17.0" prefWidth="102.0" text="Choose Category" />
       <TextArea fx:id="questionText" layoutX="172.0" layoutY="209.0" prefHeight="64.0" prefWidth="432.0" promptText="Question Text" wrapText="true" />
-      <Button layoutX="443.0" layoutY="536.0" mnemonicParsing="false" onAction="#updateQuestionAnswer" prefHeight="27.0" prefWidth="76.0" text="Update" />
-      <Button layoutX="532.0" layoutY="536.0" mnemonicParsing="false" onAction="#delQuestion" prefHeight="27.0" prefWidth="72.0" text="Delete" />
+      <Button layoutX="417.0" layoutY="536.0" mnemonicParsing="false" onAction="#updateQuestionAnswer" prefHeight="27.0" prefWidth="76.0" text="Update" />
+      <Button layoutX="535.0" layoutY="535.0" mnemonicParsing="false" onAction="#delQuestion" prefHeight="27.0" prefWidth="72.0" text="Delete" />
       <TextField fx:id="cAnswer" layoutX="171.0" layoutY="461.0" prefHeight="27.0" prefWidth="350.0" promptText="Correct Answer" />
-      <Button layoutX="603.0" layoutY="21.0" mnemonicParsing="false" onAction="#catPage" prefHeight="27.0" prefWidth="102.0" text="&lt;Categories" />
-      <Button layoutX="251.0" layoutY="536.0" mnemonicParsing="false" onAction="#clearFields" text="Clear fields" />
+      <Button layoutX="603.0" layoutY="21.0" mnemonicParsing="false" onAction="#catPage" prefHeight="27.0" prefWidth="102.0" text="Categories" />
+      <Button layoutX="169.0" layoutY="536.0" mnemonicParsing="false" onAction="#clearFields" text="Clear fields" />
    </children>
 </AnchorPane>

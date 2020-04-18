@@ -5,7 +5,7 @@
  */
 package Controllers;
 
-import Models.Category;
+import Models.CategorySet;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -47,20 +47,20 @@ public class ManagerLandingPageController implements Initializable {
     @FXML
     private Button editButton;
     @FXML
-    private TableView<Category> catTable;
+    private TableView<CategorySet> catTable;
     @FXML
-    private TableColumn<Category, Integer> idCol;
+    private TableColumn<CategorySet, Integer> idCol;
     @FXML
-    private TableColumn<Category, String> titleCol;
+    private TableColumn<CategorySet, String> titleCol;
     @FXML
     private TextField idText;
     @FXML
     private TextField titleText;
     
     
+    SceneManager scene = new SceneManager();
     
-    
-    ObservableList<Category> catList;
+    ObservableList<CategorySet> catList;
     private Sql sql;
     Connection conn = null;
     PreparedStatement pst = null;
@@ -85,7 +85,7 @@ public class ManagerLandingPageController implements Initializable {
             rs = pst.executeQuery();
             
             while(rs.next()) {
-                Category category = new Category();
+                CategorySet category = new CategorySet();
                 category.setCatId(rs.getInt("CategoryID"));
                 category.setTitle(rs.getString("Title"));
                 
@@ -212,7 +212,9 @@ public class ManagerLandingPageController implements Initializable {
         }
     }
     
-    
-   
-    
+    @FXML
+    public void viewResults() throws IOException {
+        scene.switchScene("ViewResults");
+        //((QuestionController) scene.getLoader().getController()).beginQuiz(this.categoryId);
+    }
 }

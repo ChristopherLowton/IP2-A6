@@ -9,20 +9,30 @@ package Models;
  *
  * @author Crizzil
  */
-public class Category {
+public class Score {
+    private int resultId;
     private int categoryId;
-    private String title;
+    private int position;
     
-    public Category(int categoryId, String title) {
+    public Score() {
+        //Default constructor
+    }
+
+    public Score(int resultId, int categoryId, int position) {
+        this.resultId = resultId;
         this.categoryId = categoryId;
-        this.title = title;
+        this.position = position;
+    }
+
+    public int getResultId() {
+        return this.resultId;
     }
     
     public int getCategoryId() {
         return this.categoryId;
     }
     
-    public String getTitle() {
-        return this.title;
+    public int getPosition() {
+        return this.position;
     }
 }

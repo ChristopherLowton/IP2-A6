@@ -10,39 +10,40 @@
 
 <AnchorPane id="AnchorPane" accessibleRole="COMBO_BOX" prefHeight="617.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ManagerLandingPageController">
    <children>
-      <Text fill="#3f36ff" fontSmoothingType="LCD" layoutX="122.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manager Account" textAlignment="CENTER" wrappingWidth="590.22900390625">
+      <Text fill="#3f36ff" fontSmoothingType="LCD" layoutX="125.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manager Account" textAlignment="CENTER" wrappingWidth="590.22900390625">
          <font>
             <Font name="Arial Black" size="48.0" />
          </font>
       </Text>
-      <Text layoutX="310.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Write id and title to update,delete or add" wrappingWidth="389.22900390625">
+      <Text layoutX="464.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add/Update" wrappingWidth="130.22900390625">
          <font>
             <Font size="22.0" />
          </font>
       </Text>
-      <Button fx:id="addButton" layoutX="355.0" layoutY="371.0" mnemonicParsing="false" onAction="#addCategory" prefHeight="27.0" prefWidth="80.0" text="Add" />
-      <Button fx:id="editButton" layoutX="449.0" layoutY="371.0" mnemonicParsing="false" onAction="#editCategory" prefHeight="27.0" prefWidth="80.0" text="Updae" />
+      <Button fx:id="addButton" layoutX="395.0" layoutY="309.0" mnemonicParsing="false" onAction="#addCategory" prefHeight="27.0" prefWidth="80.0" text="Add" />
+      <Button fx:id="editButton" layoutX="509.0" layoutY="309.0" mnemonicParsing="false" onAction="#editCategory" prefHeight="27.0" prefWidth="80.0" text="Update" />
       <Button layoutX="720.0" layoutY="21.0" mnemonicParsing="false" onAction="#logout" prefHeight="27.0" prefWidth="77.0" text="Logout" />
-      <TextField fx:id="titleText" layoutX="346.0" layoutY="291.0" prefHeight="27.0" prefWidth="307.0" promptText="Title" />
-      <TableView fx:id="catTable" layoutX="51.0" layoutY="190.0" prefHeight="337.0" prefWidth="226.0">
+      <TextField fx:id="titleText" layoutX="395.0" layoutY="259.0" prefHeight="27.0" prefWidth="307.0" promptText="Title" />
+      <TableView fx:id="catTable" layoutX="49.0" layoutY="216.0" prefHeight="337.0" prefWidth="226.0">
         <columns>
-          <TableColumn fx:id="idCol" prefWidth="87.0" text="ID" />
-          <TableColumn fx:id="titleCol" prefWidth="138.0" text="Title" />
+          <TableColumn fx:id="idCol" prefWidth="113.0" text="ID" />
+          <TableColumn fx:id="titleCol" prefWidth="112.0" text="Title" />
         </columns>
       </TableView>
-      <TextField fx:id="idText" layoutX="346.0" layoutY="254.0" promptText="ID" />
-      <Button layoutX="545.0" layoutY="371.0" mnemonicParsing="false" onAction="#delCategory" prefHeight="27.0" prefWidth="80.0" text="Delete" />
-      <Text fill="#b9adad" layoutX="101.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categories" wrappingWidth="108.4267578125">
+      <TextField fx:id="idText" layoutX="395.0" layoutY="216.0" promptText="ID" />
+      <Button layoutX="622.0" layoutY="309.0" mnemonicParsing="false" onAction="#delCategory" prefHeight="27.0" prefWidth="80.0" text="Delete" />
+      <Text layoutX="108.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categories" wrappingWidth="108.4267578125">
          <font>
             <Font size="23.0" />
          </font>
       </Text>
-      <Button layoutX="603.0" layoutY="21.0" mnemonicParsing="false" onAction="#questionPage" prefHeight="27.0" prefWidth="102.0" text="Questions&gt;" />
+      <Button layoutX="603.0" layoutY="21.0" mnemonicParsing="false" onAction="#questionPage" prefHeight="27.0" prefWidth="102.0" text="Questions" />
       <Text layoutX="239.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FDM maths quiz" textAlignment="CENTER" wrappingWidth="332.22900390625">
          <font>
             <Font name="Didot" size="32.0" />
          </font>
       </Text>
       <Button layoutX="21.0" layoutY="21.0" mnemonicParsing="false" onAction="#adminAccountPage" prefHeight="27.0" prefWidth="108.0" text="Create Admin" />
+      <Button layoutX="137.0" layoutY="21.0" mnemonicParsing="false" onAction="#viewResults" prefHeight="27.0" prefWidth="102.0" text="Users" />
    </children>
 </AnchorPane>

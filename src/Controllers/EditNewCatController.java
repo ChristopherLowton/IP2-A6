@@ -7,7 +7,7 @@ package Controllers;
 
 import static Controllers.Sql.conn;
 import Models.Answer;
-import Models.Category;
+import Models.CategorySet;
 import Models.Question;
 import java.io.IOException;
 import java.lang.reflect.Field;

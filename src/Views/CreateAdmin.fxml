@@ -7,19 +7,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="617.0" prefWidth="813.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="Controllers.CreateAdminController">
+<AnchorPane id="AnchorPane" prefHeight="617.0" prefWidth="813.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CreateAdminController">
    <children>
-      <Button layoutX="327.0" layoutY="423.0" mnemonicParsing="false" onAction="#register" prefHeight="27.0" prefWidth="132.0" text="Register" />
-      <Label layoutX="225.0" layoutY="113.0" prefHeight="43.0" prefWidth="359.0" text="Register admin account" textFill="#7c7a7a">
+      <Button layoutX="341.0" layoutY="420.0" mnemonicParsing="false" onAction="#register" prefHeight="27.0" prefWidth="132.0" text="Register" />
+      <Label layoutX="289.0" layoutY="94.0" prefHeight="51.0" prefWidth="236.0" text="Register admin" textFill="#7c7a7a">
          <font>
             <Font size="35.0" />
          </font>
       </Label>
-      <TextField fx:id="registerFirstName" layoutX="312.0" layoutY="182.0" promptText="First name" />
-      <TextField fx:id="registerLastName" layoutX="312.0" layoutY="236.0" promptText="Surname" />
-      <TextField fx:id="registerEmail" layoutX="312.0" layoutY="289.0" promptText="Email" />
-      <PasswordField fx:id="registerPassword" layoutX="312.0" layoutY="350.0" promptText="Password" />
+      <TextField fx:id="registerFirstName" layoutX="332.0" layoutY="175.0" promptText="First name" />
+      <TextField fx:id="registerLastName" layoutX="332.0" layoutY="225.0" promptText="Surname" />
+      <TextField fx:id="registerEmail" layoutX="332.0" layoutY="275.0" promptText="Email" />
+      <PasswordField fx:id="registerPassword" layoutX="332.0" layoutY="325.0" promptText="Password" />
       <Button layoutX="41.0" layoutY="36.0" mnemonicParsing="false" onAction="#back" prefHeight="27.0" prefWidth="71.0" text="&lt;Back" />
    </children>
 </AnchorPane>

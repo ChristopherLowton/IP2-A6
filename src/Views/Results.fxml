@@ -11,39 +11,33 @@
    <children>
       <AnchorPane prefHeight="617.0" prefWidth="813.0">
          <children>
-            <Text fill="#ffa535" fontSmoothingType="LCD" layoutX="111.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Congratulations" textAlignment="CENTER" wrappingWidth="590.22900390625">
+            <Text layoutX="226.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FDM maths quiz" textAlignment="CENTER" wrappingWidth="360.22900390625">
+               <font>
+                  <Font name="Didot" size="32.0" />
+               </font>
+            </Text>
+            <Text fill="#ffa535" fontSmoothingType="LCD" layoutX="111.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Congratulations" textAlignment="CENTER" wrappingWidth="590.22900390625">
                <font>
                   <Font name="Arial" size="79.0" />
                </font>
             </Text>
-            <Label layoutX="139.0" layoutY="246.0" prefHeight="47.0" prefWidth="190.0" text="You Scored">
+            <Label layoutX="226.0" layoutY="224.0" prefHeight="55.0" prefWidth="106.0" text="Score:">
                <font>
                   <Font size="38.0" />
                </font>
             </Label>
-            <TextArea fx:id="result" editable="false" layoutX="332.0" layoutY="238.0" prefHeight="61.0" prefWidth="162.0" style="-fx-background-color: transparent;">
-               <font>
-                  <Font size="26.0" />
-               </font></TextArea>
-            <TextArea fx:id="rating" editable="false" layoutX="201.0" layoutY="374.0" prefHeight="74.0" prefWidth="394.0" style="-fx-background-color: transparent;">
-               <font>
-                  <Font size="31.0" />
-               </font></TextArea>
-            <Label layoutX="139.0" layoutY="317.0" prefHeight="17.0" prefWidth="319.0" text="and your rating is">
+            <TextArea fx:id="rating" layoutX="434.0" layoutY="310.0" prefHeight="43.0" prefWidth="200.0" />
+            <TextArea fx:id="result" layoutX="434.0" layoutY="230.0" prefHeight="43.0" prefWidth="200.0" />
+            <Label layoutX="218.0" layoutY="304.0" prefHeight="55.0" prefWidth="123.0" text="Rating:">
                <font>
                   <Font size="38.0" />
                </font>
             </Label>
-            <Button layoutX="606.0" layoutY="569.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="83.0" text="Top scores" />
-            <Button layoutX="489.0" layoutY="569.0" mnemonicParsing="false" onAction="#reviewAnswers" text="Review answers" />
+            <Button layoutX="14.0" layoutY="576.0" mnemonicParsing="false" onAction="#restartQuiz" prefHeight="27.0" prefWidth="77.0" text="Try again?" />
+            <Button layoutX="357.0" layoutY="577.0" mnemonicParsing="false" onAction="#reviewAnswers" text="Review answers" />
+            <Button layoutX="716.0" layoutY="576.0" mnemonicParsing="false" onAction="#topScores" prefHeight="27.0" prefWidth="83.0" text="Top scores" />
+            <Button layoutX="728.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" prefHeight="27.0" prefWidth="77.0" text="Logout" />
          </children>
       </AnchorPane>
-      <Text layoutX="246.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FDM maths quiz" textAlignment="CENTER" wrappingWidth="360.22900390625">
-         <font>
-            <Font name="Didot" size="32.0" />
-         </font>
-      </Text>
-      <Button layoutX="720.0" layoutY="31.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Logout" />
-      <Button layoutX="704.0" layoutY="568.0" mnemonicParsing="false" onAction="#restartQuiz" prefHeight="27.0" prefWidth="77.0" text="Try again?" />
    </children>
 </AnchorPane>

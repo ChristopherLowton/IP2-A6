@@ -4,37 +4,44 @@
  * and open the template in the editor.
  */
 package Controllers;
+
 import Models.Answer;
 import Models.Category;
+import Models.CategorySet;
 import Models.Question;
+import Models.Result;
+import Models.Score;
+import Models.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author syed
  */
 public class Sql {
+
     public static Connection conn = connectDb();
-    
+
     public static Connection connectDb() {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ip2","root","");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ip2", "root", "");
             return conn;
-        } catch(Exception e) {
-           return null;
+        } catch (SQLException e) {
+            return null;
         }
     }
-    
+
     public ArrayList<Question> getQuestions(int categoryId) {
         try {
             PreparedStatement pst = conn.prepareStatement("SELECT * FROM questions WHERE CategoryId=?");
             pst.setInt(1, categoryId);
             ResultSet rs = pst.executeQuery();
-            
-            ArrayList<Question> questions = new ArrayList<Question>();
+
+            ArrayList<Question> questions = new ArrayList<>();
             while (rs.next()) {
                 Question q = new Question(rs.getInt(1),
                         rs.getInt(2),
@@ -47,14 +54,14 @@ public class Sql {
             return null;
         }
     }
-    
+
     public ArrayList<Answer> getAnswers(int questionId) {
         try {
             PreparedStatement pst = conn.prepareStatement("SELECT * FROM answers WHERE QuestionId=?");
             pst.setInt(1, questionId);
             ResultSet rs = pst.executeQuery();
-            
-            ArrayList<Answer> answers = new ArrayList<Answer>();
+
+            ArrayList<Answer> answers = new ArrayList<>();
             while (rs.next()) {
                 Answer q = new Answer(rs.getInt(1),
                         rs.getInt(2),
@@ -68,14 +75,14 @@ public class Sql {
             return null;
         }
     }
-    
+
     public boolean validateLogin(String email, String password) {
         try {
             PreparedStatement pst = conn.prepareStatement("Select * from users where email=? and password=?");
             pst.setString(1, email);
             pst.setString(2, password);
             ResultSet rs = pst.executeQuery();
-            
+
             if (rs.next()) {
                 return true;
             } else {
@@ -86,7 +93,7 @@ public class Sql {
             return false;
         }
     }
-    
+
     public boolean registerUser(String firstName, String lastName, String email, String password) {
         try {
             PreparedStatement pst = conn.prepareStatement("INSERT INTO `users`(`FirstName`, `LastName`, `Email`, `Password`) VALUES (?,?,?,?)");
@@ -94,7 +101,7 @@ public class Sql {
             pst.setString(2, lastName);
             pst.setString(3, email);
             pst.setString(4, password);
-            
+
             if (pst.executeUpdate() != 0) {
                 return true;
             } else {
@@ -105,46 +112,160 @@ public class Sql {
             return false;
         }
     }
-       
-        public ArrayList<Integer> seacrhCatId(String tempCat) {
+
+    public ArrayList<Integer> seacrhCatId(String tempCat) {
         try {
             PreparedStatement pst = conn.prepareStatement("SELECT * FROM categories where Title=?");
             pst.setString(1, tempCat);
             ResultSet rs = pst.executeQuery();
             ArrayList<Integer> idList = new ArrayList<>();
-            while(rs.next()) {
+            while (rs.next()) {
                 int tempId = rs.getInt("CategoryID");
                 idList.add(tempId);
             }
             return idList;
         } catch (SQLException ex) {
             Logger.getLogger(Sql.class.getName()).log(Level.SEVERE, null, ex);
-        } return null;
         }
-        
-        public ArrayList<Integer> searchQId(String tempQText) {
+        return null;
+    }
+
+    public ArrayList<Integer> searchQId(String tempQText) {
         try {
             PreparedStatement pst = conn.prepareStatement("Select * From questions where Text=?");
             pst.setString(1, tempQText);
             ResultSet rs = pst.executeQuery();
             ArrayList<Integer> qIdList = new ArrayList<>();
-            while(rs.next()) {
+            while (rs.next()) {
                 int tempQId = rs.getInt("QuestionID");
                 qIdList.add(tempQId);
             }
             return qIdList;
         } catch (SQLException ex) {
             Logger.getLogger(Sql.class.getName()).log(Level.SEVERE, null, ex);
-        }   return null;
-                
-                }
-        
-        
+        }
+        return null;
+    }
+
+    public ArrayList<Score> getTopScores() {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM scoreboards");
+            ResultSet rs = pst.executeQuery();
+
+            ArrayList<Score> scores = new ArrayList<>();
+            while (rs.next()) {
+                Score s = new Score(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3));
+                scores.add(s);
+            }
+            return scores;
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public User getUserById(int Id) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM users WHERE UserId=? LIMIT 1");
+            pst.setString(1, String.valueOf(Id));
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                User user = new User(rs.getInt(1),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Email"),
+                        rs.getString("Password"),
+                        rs.getBoolean("AdminRights"));
+                return user;
+            }
+            return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public Result getResultById(int Id) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM results WHERE ResultID=? LIMIT 1");
+            pst.setString(1, String.valueOf(Id));
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                Result result = new Result(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4));
+                return result;
+            }
+            return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public ArrayList<User> getUsers() {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM users");
+            ResultSet rs = pst.executeQuery();
+
+            ArrayList<User> users = new ArrayList<>();
+            while (rs.next()) {
+                User u = new User(rs.getInt(1),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Email"),
+                        rs.getString("Password"),
+                        rs.getBoolean(6));
+                users.add(u);
+            }
+            return users;
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public ArrayList<Result> getResultsByUserId(int Id) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM results WHERE UserId=?");
+            pst.setString(1, String.valueOf(Id));
+            ResultSet rs = pst.executeQuery();
+
+            ArrayList<Result> results = new ArrayList<>();
+            while (rs.next()) {
+                Result r = new Result(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4));
+                results.add(r);
+            }
+            return results;
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
-    
-    
-    
-    
-    
+    public Category getCategoryById(int Id) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM categories WHERE CategoryId=? LIMIT 1");
+            pst.setString(1, String.valueOf(Id));
+            ResultSet rs = pst.executeQuery();
 
+            if (rs.next()) {
+                Category category = new Category(rs.getInt(1),
+                        rs.getString("Title"));
+                return category;
+            }
+            return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+}

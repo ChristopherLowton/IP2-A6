@@ -18,6 +18,8 @@
                   <TableColumn fx:id="correctColumn" prefWidth="92.0" text="Right/Wrong" />
               </columns>
             </TableView>
+            <Button fx:id="restartQuiz" layoutX="19.0" layoutY="572.0" mnemonicParsing="false" onAction="#restartQuiz" prefHeight="27.0" prefWidth="77.0" text="Try again?" />
+            <Button layoutX="716.0" layoutY="572.0" mnemonicParsing="false" onAction="#topScores" prefHeight="27.0" prefWidth="83.0" text="Top scores" />
          </children>
       </AnchorPane>
       <Text layoutX="256.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FDM maths quiz" textAlignment="CENTER" wrappingWidth="360.22900390625">
@@ -25,9 +27,7 @@
             <Font name="Didot" size="32.0" />
          </font>
       </Text>
-      <Button layoutX="720.0" layoutY="31.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Logout" />
-      <Button layoutX="606.0" layoutY="569.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="83.0" text="Top scores" />
-      <Button fx:id="restartQuiz" layoutX="704.0" layoutY="568.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Try again?" />
+      <Button layoutX="720.0" layoutY="31.0" mnemonicParsing="false" onAction="#logout" prefHeight="27.0" prefWidth="77.0" text="Logout" />
       <Text fill="#ffa535" fontSmoothingType="LCD" layoutX="121.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Review Answers" textAlignment="CENTER" wrappingWidth="590.22900390625">
          <font>
             <Font name="Arial" size="79.0" />
