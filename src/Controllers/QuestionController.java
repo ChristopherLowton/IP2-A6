@@ -2,6 +2,8 @@ package Controllers;
 
 import Models.Answer;
 import Models.Question;
+import Models.Result;
+import Models.Score;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -67,11 +69,14 @@ public class QuestionController implements Initializable {
 
     private String[][] results = new String[5][3];
 
+    private int userId;
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void beginQuiz(int categoryId) {
+    public void beginQuiz(int userId, int categoryId) {
+        this.userId = userId;
         getQuestions(categoryId);
         Collections.shuffle(this.questions);
         displayQuestion(this.questions.get(currentQuestionIndex));
@@ -112,8 +117,9 @@ public class QuestionController implements Initializable {
                 displayQuestion(q);
                 this.currentQuestionIndex++;
             } else {
+                saveResult();
                 scene.switchScene("Results");
-                ((ResultsController) scene.getLoader().getController()).showResults(this.results, this.score, this.categoryId);
+                ((ResultsController) scene.getLoader().getController()).showResults(this.userId, this.results, this.score, this.categoryId);
             }
         } else if (selectedCount > 1) {
             showAlert(AlertType.ERROR, "Too many answers", "You can only select one answer.");
@@ -187,6 +193,35 @@ public class QuestionController implements Initializable {
         this.answerD.selectedProperty().set(false);
     }
 
+    private void saveResult() {
+        Result currentResult = this.sql.getResultByUserAndCat(this.categoryId, this.userId);
+        if (this.score > currentResult.getScore()) {
+            this.sql.removeResult(currentResult.getResultId());
+            this.sql.addResult(this.categoryId, this.userId, this.score);
+            Result newResult = this.sql.getResultByUserAndCat(this.categoryId, this.userId);
+            handleTopScores(newResult.getResultId());
+        }
+
+    }
+    
+    private void handleTopScores(int resultId) {
+        ArrayList<Result> results = new ArrayList<>();
+        ArrayList<Score> scores = this.sql.getTopScores();
+        Collections.sort(scores);
+        for (int i = 0; i < scores.size(); i++) {
+            System.out.println(scores.get(i).getPosition());
+            results.add(this.sql.getResultById(scores.get(i).getResultId()));
+        }
+        for (int i = 0; i < results.size(); i++) {
+            if (this.score > results.get(i).getScore()) {
+                //Replace score
+                this.sql.removeScore(results.get(i).getResultId());
+                this.sql.addScore(resultId, this.categoryId, this.score);
+                break;
+            }
+        }
+    }
+    
     @FXML
     private void logout(ActionEvent event) throws SQLException, Exception {
         Optional<ButtonType> result = showAlert(Alert.AlertType.CONFIRMATION, "Confirm logout", "Are you sure you want to logout?");

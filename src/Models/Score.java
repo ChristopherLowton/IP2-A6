@@ -9,7 +9,7 @@ package Models;
  *
  * @author Crizzil
  */
-public class Score {
+public class Score implements Comparable {
     private int resultId;
     private int categoryId;
     private int position;
@@ -34,5 +34,15 @@ public class Score {
     
     public int getPosition() {
         return this.position;
+    }
+
+    @Override
+    public int compareTo(Object s) {
+        int comparePos=((Score) s).getPosition();
+        /* Ascending */
+        return this.position-comparePos;
+
+        /* Descending */
+        //return comparePos-this.position;
     }
 }

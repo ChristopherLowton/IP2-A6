@@ -49,11 +49,15 @@ public class LoginController {
 
     Sql sql = new Sql();
     SceneManager scene = new SceneManager();
+    
+    private int userId;
 
     @FXML
     private void login(ActionEvent event) throws SQLException, IOException {
-        if (sql.validateLogin(loginEmail.getText(), loginPassword.getText())) {
+        this.userId = (sql.validateLogin(loginEmail.getText(), loginPassword.getText()));
+        if (this.userId > 0) {
             scene.switchScene("ChooseCategory");
+            ((ChooseCategoryController) scene.getLoader().getController()).initialize(this.userId);
         } else {
             showAlert(Alert.AlertType.ERROR, "Invalid", "Invalid email or password.");
         }

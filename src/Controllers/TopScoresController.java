@@ -51,7 +51,10 @@ public class TopScoresController {
     
     Sql sql = new Sql();
     
-    public void showScores(String[][] results, int categoryId) {
+    private int userId;
+    
+    public void showScores(int userId, String[][] results, int categoryId) {
+        this.userId = userId;
         this.results = results;
         this.categoryId = categoryId;
         this.scores = this.sql.getTopScores();
@@ -70,13 +73,13 @@ public class TopScoresController {
     @FXML
     public void reviewAnswers() throws IOException {
         scene.switchScene("ReviewAnswers");
-        ((ReviewAnswersController) scene.getLoader().getController()).showAnswers(this.results, this.categoryId);
+        ((ReviewAnswersController) scene.getLoader().getController()).showAnswers(this.userId, this.results, this.categoryId);
     }
     
     @FXML
     public void restartQuiz() throws IOException {
         scene.switchScene("Question");
-        ((QuestionController) scene.getLoader().getController()).beginQuiz(this.categoryId);
+        ((QuestionController) scene.getLoader().getController()).beginQuiz(this.userId, this.categoryId);
     }
     
     @FXML

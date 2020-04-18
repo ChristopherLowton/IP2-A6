@@ -76,7 +76,7 @@ public class Sql {
         }
     }
 
-    public boolean validateLogin(String email, String password) {
+    public int validateLogin(String email, String password) {
         try {
             PreparedStatement pst = conn.prepareStatement("Select * from users where email=? and password=?");
             pst.setString(1, email);
@@ -84,13 +84,13 @@ public class Sql {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                return true;
+                return rs.getInt(1);
             } else {
-                return false;
+                return -1;
             }
         } catch (SQLException ex) {
             Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            return -1;
         }
     }
 
@@ -266,6 +266,95 @@ public class Sql {
         } catch (SQLException ex) {
             Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+    }
+    
+    public boolean removeScore(int resultId) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("DELETE FROM scoreboards WHERE ResultID=?");
+            pst.setInt(1, resultId);
+
+            if (pst.executeUpdate() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public boolean addScore(int resultId, int categoryId, int postion) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("INSERT INTO scoreboards VALUES (?,?,?)");
+            pst.setInt(1, resultId);
+            pst.setInt(2, categoryId);
+            pst.setInt(3, postion);
+
+            if (pst.executeUpdate() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public Result getResultByUserAndCat(int categoryId, int userId) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM results WHERE CategoryId=? AND UserId=?");
+            pst.setString(1, String.valueOf(categoryId));
+            pst.setString(1, String.valueOf(userId));
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                Result result = new Result(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4));
+                return result;
+            }
+            return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public boolean addResult(int categoryId, int userId, int score) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("INSERT INTO results (CategoryID, UserID, Score) VALUES (?,?,?)");
+            pst.setInt(1, categoryId);
+            pst.setInt(2, userId);
+            pst.setInt(3, score);
+
+            if (pst.executeUpdate() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    public boolean removeResult(int resultId) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("DELETE FROM results WHERE ResultID=?");
+            pst.setInt(1, resultId);
+
+            if (pst.executeUpdate() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
 }

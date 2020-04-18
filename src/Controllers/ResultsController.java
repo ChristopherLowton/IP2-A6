@@ -32,7 +32,10 @@ public class ResultsController {
     private int score;
     private String[][] results;
     
-    public void showResults(String[][] results, int score, int categoryId) {
+    private int userId;
+    
+    public void showResults(int userId, String[][] results, int score, int categoryId) {
+        this.userId = userId;
         this.score = score;
         this.results = results;
         this.categoryId = categoryId;
@@ -43,19 +46,19 @@ public class ResultsController {
     @FXML
     public void restartQuiz() throws IOException {
         scene.switchScene("Question");
-        ((QuestionController) scene.getLoader().getController()).beginQuiz(this.categoryId);
+        ((QuestionController) scene.getLoader().getController()).beginQuiz(this.userId, this.categoryId);
     }
     
     @FXML
     public void reviewAnswers() throws IOException {
         scene.switchScene("ReviewAnswers");
-        ((ReviewAnswersController) scene.getLoader().getController()).showAnswers(this.results, this.categoryId);
+        ((ReviewAnswersController) scene.getLoader().getController()).showAnswers(this.userId, this.results, this.categoryId);
     }
     
     @FXML
     public void topScores() throws IOException {
         scene.switchScene("TopScores");
-        ((TopScoresController) scene.getLoader().getController()).showScores(this.results, this.categoryId);
+        ((TopScoresController) scene.getLoader().getController()).showScores(this.userId, this.results, this.categoryId);
     }
     
     @FXML

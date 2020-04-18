@@ -31,7 +31,7 @@ import javafx.scene.control.ChoiceBox;
  *
  * @author Crizzil
  */
-public class ChooseCategoryController implements Initializable {
+public class ChooseCategoryController {
 
     SceneManager scene = new SceneManager();
     @FXML
@@ -46,8 +46,10 @@ public class ChooseCategoryController implements Initializable {
    Sql sql = new Sql();
    ObservableList catList;
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+   private int userId;
+   
+    public void initialize(int userId) {
+        this.userId = userId;
         populateCat();
     }
     
@@ -60,7 +62,7 @@ public class ChooseCategoryController implements Initializable {
         int catId =fetchCatInfo(tempCat);
         
         scene.switchScene("Question");
-        ((QuestionController) scene.getLoader().getController()).beginQuiz(catId);
+        ((QuestionController) scene.getLoader().getController()).beginQuiz(this.userId, catId);
     }
     
     

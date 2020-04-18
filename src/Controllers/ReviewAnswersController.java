@@ -40,7 +40,10 @@ public class ReviewAnswersController {
     private String[][] results;
     private int categoryId;
 
-    public void showAnswers(String[][] results, int categoryId) {
+    private int userId;
+    
+    public void showAnswers(int userId, String[][] results, int categoryId) {
+        this.userId = userId;
         this.results = results;
         this.categoryId = categoryId;
 
@@ -57,13 +60,13 @@ public class ReviewAnswersController {
     @FXML
     public void restartQuiz() throws IOException {
         scene.switchScene("Question");
-        ((QuestionController) scene.getLoader().getController()).beginQuiz(this.categoryId);
+        ((QuestionController) scene.getLoader().getController()).beginQuiz(this.userId, this.categoryId);
     }
     
     @FXML
     public void topScores() throws IOException {
         scene.switchScene("TopScores");
-        ((TopScoresController) scene.getLoader().getController()).showScores(this.results, this.categoryId);
+        ((TopScoresController) scene.getLoader().getController()).showScores(this.userId, this.results, this.categoryId);
     }
     
     @FXML
