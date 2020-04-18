@@ -61,7 +61,7 @@ public class QuestionController implements Initializable {
     private SceneManager scene = new SceneManager();
 
     private int categoryId;
-    
+
     private int currentQuestionIndex = 0;
     private ArrayList<Question> questions;
 
@@ -70,7 +70,7 @@ public class QuestionController implements Initializable {
     private String[][] results = new String[5][3];
 
     private int userId;
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
@@ -195,15 +195,16 @@ public class QuestionController implements Initializable {
 
     private void saveResult() {
         Result currentResult = this.sql.getResultByUserAndCat(this.categoryId, this.userId);
-        if (this.score > currentResult.getScore()) {
-            this.sql.removeResult(currentResult.getResultId());
-            this.sql.addResult(this.categoryId, this.userId, this.score);
-            Result newResult = this.sql.getResultByUserAndCat(this.categoryId, this.userId);
-            handleTopScores(newResult.getResultId());
+        if (currentResult != null) {
+            if (this.score > currentResult.getScore()) {
+                this.sql.removeResult(currentResult.getResultId());
+                this.sql.addResult(this.categoryId, this.userId, this.score);
+                Result newResult = this.sql.getResultByUserAndCat(this.categoryId, this.userId);
+                handleTopScores(newResult.getResultId());
+            }
         }
-
     }
-    
+
     private void handleTopScores(int resultId) {
         ArrayList<Result> results = new ArrayList<>();
         ArrayList<Score> scores = this.sql.getTopScores();
@@ -221,7 +222,7 @@ public class QuestionController implements Initializable {
             }
         }
     }
-    
+
     @FXML
     private void logout(ActionEvent event) throws SQLException, Exception {
         Optional<ButtonType> result = showAlert(Alert.AlertType.CONFIRMATION, "Confirm logout", "Are you sure you want to logout?");
@@ -237,6 +238,5 @@ public class QuestionController implements Initializable {
         alert.setContentText(message);
         return alert.showAndWait();
     }
-    
-    
+
 }

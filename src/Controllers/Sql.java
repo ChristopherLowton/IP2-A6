@@ -307,7 +307,7 @@ public class Sql {
         try {
             PreparedStatement pst = conn.prepareStatement("SELECT * FROM results WHERE CategoryId=? AND UserId=?");
             pst.setString(1, String.valueOf(categoryId));
-            pst.setString(1, String.valueOf(userId));
+            pst.setString(2, String.valueOf(userId));
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
