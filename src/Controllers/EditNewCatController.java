@@ -82,16 +82,17 @@ public class EditNewCatController implements Initializable {
             showAlert(Alert.AlertType.INFORMATION, "Success", "You have successfully saved question and answers.");
             clearFields();
         }
-
     }
 
     @FXML
     private void updateQuestionAnswer(ActionEvent event) {
-        if (questionText.getText().isEmpty() | cAnswer.getText().isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Update Error", "No question or correct answer selected");
-        } else {
-            updateQuestion();
-            updateCorrectAns();
+        if (validateFields()) {
+            if (questionText.getText().isEmpty() | cAnswer.getText().isEmpty()) {
+                showAlert(Alert.AlertType.ERROR, "Update Error", "No question or correct answer selected");
+            } else {
+                updateQuestion();
+                updateCorrectAns();
+            }
         }
     }
 
@@ -228,36 +229,39 @@ public class EditNewCatController implements Initializable {
     }
 
     public void updateQuestion() {
-        try {
-            String text = questionText.getText();
-            int qId = this.questions.get(currentQuestionIndex).getId();
+        if (validateFields()) {
+            try {
+                String text = questionText.getText();
+                int qId = this.questions.get(currentQuestionIndex).getId();
 
-            String query = "UPDATE `questions` SET `Text` =? WHERE `questions`.`QuestionID` =?";
-            pst = sql.connectDb().prepareStatement(query);
-            pst.setString(1, text);
-            pst.setInt(2, qId);
-            if (pst.executeUpdate() != 0) {
+                String query = "UPDATE `questions` SET `Text` =? WHERE `questions`.`QuestionID` =?";
+                pst = sql.connectDb().prepareStatement(query);
+                pst.setString(1, text);
+                pst.setInt(2, qId);
+                if (pst.executeUpdate() != 0) {
 
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(EditNewCatController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(EditNewCatController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public void updateCorrectAns() {
-        try {
-            String text = cAnswer.getText();
-            int ansId = fetchAnsId();
+        if (validateFields()) {
+            try {
+                String text = cAnswer.getText();
+                int ansId = fetchAnsId();
 
-            String query = "UPDATE `answers` SET `Text`=? WHERE `answers`.`AnswerID` =?";
-            pst = sql.connectDb().prepareStatement(query);
-            pst.setString(1, text);
-            pst.setInt(2, ansId);
-            if (pst.executeUpdate() != 0) {
+                String query = "UPDATE `answers` SET `Text`=? WHERE `answers`.`AnswerID` =?";
+                pst = sql.connectDb().prepareStatement(query);
+                pst.setString(1, text);
+                pst.setInt(2, ansId);
+                if (pst.executeUpdate() != 0) {
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(EditNewCatController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(EditNewCatController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
