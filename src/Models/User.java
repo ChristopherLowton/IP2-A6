@@ -51,4 +51,8 @@ public class User {
     public String getFullName() {
         return this.firstname + " " + this.lastname;
     }
+    
+    public boolean isAdmin() {
+        return this.admin;
+    }
 }

@@ -28,7 +28,7 @@
                </columnResizePolicy>
             </TableView>
             <Button fx:id="tryAgain" layoutX="14.0" layoutY="576.0" mnemonicParsing="false" onAction="#restartQuiz" prefHeight="27.0" prefWidth="77.0" text="Try again?" />
-            <Button layoutX="706.0" layoutY="577.0" mnemonicParsing="false" text="Review answers" />
+            <Button layoutX="706.0" layoutY="577.0" mnemonicParsing="false" onAction="#reviewAnswers" text="Review answers" />
             <Button fx:id="logout" layoutX="728.0" layoutY="14.0" mnemonicParsing="false" onAction="#logout" prefHeight="27.0" prefWidth="77.0" text="Logout" />
          </children>
       </AnchorPane>

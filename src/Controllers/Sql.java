@@ -250,7 +250,7 @@ public class Sql {
             return null;
         }
     }
-    
+
     public Category getCategoryById(int Id) {
         try {
             PreparedStatement pst = conn.prepareStatement("SELECT * FROM categories WHERE CategoryId=? LIMIT 1");
@@ -268,7 +268,7 @@ public class Sql {
             return null;
         }
     }
-    
+
     public boolean removeScore(int resultId) {
         try {
             PreparedStatement pst = conn.prepareStatement("DELETE FROM scoreboards WHERE ResultID=?");
@@ -284,7 +284,7 @@ public class Sql {
             return false;
         }
     }
-    
+
     public boolean addScore(int resultId, int categoryId, int postion) {
         try {
             PreparedStatement pst = conn.prepareStatement("INSERT INTO scoreboards VALUES (?,?,?)");
@@ -302,7 +302,7 @@ public class Sql {
             return false;
         }
     }
-    
+
     public Result getResultByUserAndCat(int categoryId, int userId) {
         try {
             PreparedStatement pst = conn.prepareStatement("SELECT * FROM results WHERE CategoryId=? AND UserId=?");
@@ -323,7 +323,7 @@ public class Sql {
             return null;
         }
     }
-    
+
     public boolean addResult(int categoryId, int userId, int score) {
         try {
             PreparedStatement pst = conn.prepareStatement("INSERT INTO results (CategoryID, UserID, Score) VALUES (?,?,?)");
@@ -341,7 +341,7 @@ public class Sql {
             return false;
         }
     }
-    
+
     public boolean removeResult(int resultId) {
         try {
             PreparedStatement pst = conn.prepareStatement("DELETE FROM results WHERE ResultID=?");
@@ -355,6 +355,28 @@ public class Sql {
         } catch (SQLException ex) {
             Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        }
+    }
+
+    public User getUser(int id) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM users WHERE UserID=?");
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                User user = new User(rs.getInt(1),
+                        rs.getString("FirstName"),
+                        rs.getString("LastName"),
+                        rs.getString("Email"),
+                        rs.getString("Password"),
+                        rs.getBoolean(6));
+                return user;
+            }
+            return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 }

@@ -41,17 +41,17 @@
                   <Font name="Didot" size="32.0" />
                </font>
             </Text>
+            <Text fill="#3f36ff" fontSmoothingType="LCD" layoutX="111.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manager Account" textAlignment="CENTER" wrappingWidth="590.22900390625">
+               <font>
+                  <Font name="Arial Black" size="48.0" />
+               </font>
+            </Text>
+            <Text layoutX="240.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FDM maths quiz" textAlignment="CENTER" wrappingWidth="332.22900390625">
+               <font>
+                  <Font name="Didot" size="32.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
-      <Text layoutX="249.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FDM maths quiz" textAlignment="CENTER" wrappingWidth="332.22900390625">
-         <font>
-            <Font name="Didot" size="32.0" />
-         </font>
-      </Text>
-      <Text fill="#3f36ff" fontSmoothingType="LCD" layoutX="135.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manager Account" textAlignment="CENTER" wrappingWidth="590.22900390625">
-         <font>
-            <Font name="Arial Black" size="48.0" />
-         </font>
-      </Text>
    </children>
 </AnchorPane>

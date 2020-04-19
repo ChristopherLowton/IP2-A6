@@ -91,6 +91,18 @@ public class QuestionController implements Initializable {
     }
 
     @FXML
+    public void previous() {
+        Question q = null;
+        if (this.currentQuestionIndex > 0) {
+            q = this.questions.get(this.currentQuestionIndex - 1);
+        }
+        if (q != null) {
+            this.currentQuestionIndex--;
+            displayQuestion(q);
+        }
+    }
+
+    @FXML
     public void next() throws IOException {
         int selectedCount = 0;
         if (this.answerA.selectedProperty().get()) {
@@ -114,8 +126,8 @@ public class QuestionController implements Initializable {
                 q = this.questions.get(this.currentQuestionIndex + 1);
             }
             if (q != null) {
-                displayQuestion(q);
                 this.currentQuestionIndex++;
+                displayQuestion(q);
             } else {
                 saveResult();
                 scene.switchScene("Results");
@@ -142,6 +154,30 @@ public class QuestionController implements Initializable {
             this.answerB.setText(answers.get(1).getText());
             this.answerC.setText(answers.get(2).getText());
             this.answerD.setText(answers.get(3).getText());
+            if (this.results[currentQuestionIndex] != null) {
+                if (this.results[currentQuestionIndex][1] != null && this.results[currentQuestionIndex][1].isEmpty() == false) {
+                    if (this.results[currentQuestionIndex][1].equals("A")) {
+                        this.answerA.selectedProperty().set(true);
+                    } else {
+                        this.answerA.selectedProperty().set(false);
+                    }
+                    if (this.results[currentQuestionIndex][1].equals("B")) {
+                        this.answerB.selectedProperty().set(true);
+                    } else {
+                        this.answerB.selectedProperty().set(false);
+                    }
+                    if (this.results[currentQuestionIndex][1].equals("C")) {
+                        this.answerC.selectedProperty().set(true);
+                    } else {
+                        this.answerC.selectedProperty().set(false);
+                    }
+                    if (this.results[currentQuestionIndex][1].equals("D")) {
+                        this.answerD.selectedProperty().set(true);
+                    } else {
+                        this.answerD.selectedProperty().set(false);
+                    }
+                }
+            }
         } else {
             System.out.println("Error displaying answers");
         }

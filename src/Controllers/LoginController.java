@@ -31,7 +31,7 @@ public class LoginController {
 
     @FXML
     private Button testManager;
-    
+
     @FXML
     private Button loginButton;
     @FXML
@@ -49,15 +49,20 @@ public class LoginController {
 
     Sql sql = new Sql();
     SceneManager scene = new SceneManager();
-    
+
     private int userId;
 
     @FXML
     private void login(ActionEvent event) throws SQLException, IOException {
         this.userId = (sql.validateLogin(loginEmail.getText(), loginPassword.getText()));
         if (this.userId > 0) {
-            scene.switchScene("ChooseCategory");
-            ((ChooseCategoryController) scene.getLoader().getController()).initialize(this.userId);
+            boolean admin = this.sql.getUser(this.userId).isAdmin();
+            if (admin) {
+                scene.switchScene("ManagerLandingPage");
+            } else {
+                scene.switchScene("ChooseCategory");
+                ((ChooseCategoryController) scene.getLoader().getController()).initialize(this.userId);
+            }
         } else {
             showAlert(Alert.AlertType.ERROR, "Invalid", "Invalid email or password.");
         }
@@ -83,13 +88,10 @@ public class LoginController {
         alert.setContentText(message);
         return alert.showAndWait();
     }
-    
-    
-    
-    
+
     @FXML
     private void testManage(ActionEvent event) throws IOException {
         scene.switchScene("ManagerLandingPage");
     }
-    
+
 }
