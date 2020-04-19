@@ -38,52 +38,58 @@ public class CreateAdminController implements Initializable {
     private TextField registerEmail;
     @FXML
     private PasswordField registerPassword;
-    
-   Connection conn = null;
-   PreparedStatement pst= null;
-   ResultSet rs= null; 
+
+    Connection conn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
     Sql sql = new Sql();
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
     @FXML
     private void register(ActionEvent event) {
-       if(validateFields()){
-        try {
-            String fName= registerFirstName.getText();
-            String lName= registerLastName.getText();
-            String email= registerEmail.getText();
-            String password = registerPassword.getText();
-            int adminRights=1;
-            
-            String query= "INSERT INTO `users`(`FirstName`, `LastName`, `Email`, `Password`,AdminRights) VALUES (?,?,?,?,?)";
-            pst = sql.connectDb().prepareStatement(query);
-            pst.setString(1, fName);
-            pst.setString(2, lName);
-            pst.setString(3, email);
-            pst.setString(4, password);
-            pst.setInt(5, adminRights);
-            if(pst.executeUpdate() !=0){  
+        if (validateFields()) {
+            if (this.sql.getUserByEmail(registerEmail.getText()) == null) {
+                try {
+                    String fName = registerFirstName.getText();
+                    String lName = registerLastName.getText();
+                    String email = registerEmail.getText();
+                    String password = registerPassword.getText();
+                    int adminRights = 1;
+
+                    String query = "INSERT INTO `users`(`FirstName`, `LastName`, `Email`, `Password`,AdminRights) VALUES (?,?,?,?,?)";
+                    pst = sql.connectDb().prepareStatement(query);
+                    pst.setString(1, fName);
+                    pst.setString(2, lName);
+                    pst.setString(3, email);
+                    pst.setString(4, password);
+                    pst.setInt(5, adminRights);
+                    if (pst.executeUpdate() != 0) {
+                    }
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "You have successfully registered.");
+                    clearFields();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CreateAdminController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                showAlert(Alert.AlertType.INFORMATION, "Error", "A user already exists with this email.");
             }
-            showAlert(Alert.AlertType.INFORMATION, "Success", "You have successfully registered.");
-            clearFields();
-        } catch (SQLException ex) {
-            Logger.getLogger(CreateAdminController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       }
     }
+
     private void clearFields() {
-            registerFirstName.clear();
-            registerLastName.clear();
-            registerEmail.clear();
-            registerPassword.clear();
-        }
-        
+        registerFirstName.clear();
+        registerLastName.clear();
+        registerEmail.clear();
+        registerPassword.clear();
+    }
+
     private Optional<ButtonType> showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -91,31 +97,19 @@ public class CreateAdminController implements Initializable {
         alert.setContentText(message);
         return alert.showAndWait();
     }
-        
+
     private boolean validateFields() {
-        if(registerFirstName.getText().isEmpty() | registerLastName.getText().isEmpty() | registerEmail.getText().isEmpty() |registerPassword.getText().isEmpty())
-        { showAlert(Alert.AlertType.WARNING, "Check Fields", "Please Enter into the fields");
-        return false;
+        if (registerFirstName.getText().isEmpty() || registerLastName.getText().isEmpty() || registerEmail.getText().isEmpty() || registerPassword.getText().isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Check Fields", "Please ensure all fields are filled in.");
+            return false;
         }
         return true;
     }
-        
+
     @FXML
     private void back(ActionEvent event) throws IOException {
         SceneManager scene = new SceneManager();
         scene.switchScene("ManagerLandingPage");
     }
-    
-    
-    
-    
-    }
-    
-    
-    
-    
-    
-    
-    
-    
 
+}

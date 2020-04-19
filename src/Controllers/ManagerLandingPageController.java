@@ -56,154 +56,149 @@ public class ManagerLandingPageController implements Initializable {
     private TextField idText;
     @FXML
     private TextField titleText;
-    
-    
+
     SceneManager scene = new SceneManager();
+
+    private Sql sql = new Sql();
     
     ObservableList<CategorySet> catList;
-    private Sql sql;
     Connection conn = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-    
-    
-    
-     @Override
+
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+
         populateCatTable();
-    }    
-    
+    }
+
     private void populateCatTable() {
         try {
             catList = FXCollections.observableArrayList();
-            
+
             String query = "Select * from categories";
-            conn= sql.connectDb();
-            pst= conn.prepareStatement(query);
+            conn = Sql.connectDb();
+            pst = conn.prepareStatement(query);
             rs = pst.executeQuery();
-            
-            while(rs.next()) {
+
+            while (rs.next()) {
                 CategorySet category = new CategorySet();
                 category.setCatId(rs.getInt("CategoryID"));
                 category.setTitle(rs.getString("Title"));
-                
+
                 catList.add(category);
             }
-            
-            idCol.setCellValueFactory(new PropertyValueFactory<>("catId")  );
-            titleCol.setCellValueFactory(new PropertyValueFactory<>("title")  );
-            
+
+            idCol.setCellValueFactory(new PropertyValueFactory<>("catId"));
+            titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+
             catTable.setItems(catList);
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ManagerLandingPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     private void addCategory() {
         try {
-            if(titleText.getText().isEmpty()){
-              showAlert(Alert.AlertType.WARNING, "Check Field", "Please Enter into the field title");
-            }
-            else{
-            String title= titleText.getText(); 
-            String query = "INSERT INTO `categories`(Title) VALUES (?)";
-            pst = sql.connectDb().prepareStatement(query);
-            pst.setString(1, title);
-            if(pst.executeUpdate() !=0){  
-            }
-            populateCatTable(); 
-            clearFields();
+            if (titleText.getText().isEmpty()) {
+                showAlert(Alert.AlertType.WARNING, "Check Field", "Please Enter into the field title");
+            } else {
+                String title = titleText.getText();
+                String query = "INSERT INTO `categories`(Title) VALUES (?)";
+                pst = Sql.connectDb().prepareStatement(query);
+                pst.setString(1, title);
+                if (pst.executeUpdate() != 0) {
+                }
+                populateCatTable();
+                clearFields();
             }
         } catch (SQLException ex) {
             Logger.getLogger(ManagerLandingPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     @FXML
     private void editCategory() {
         try {
-            if(titleText.getText().isEmpty()| idText.getText().isEmpty()){
-              showAlert(Alert.AlertType.WARNING, "Check Fields", "Please Enter into the fields to update");
-            }
-            else{
-            String tempId= idText.getText();
-            int id = Integer.parseInt(tempId);
-            String title = titleText.getText();
-            
-            String query = "UPDATE `categories` SET `Title` =? WHERE `categories`.`CategoryID` = ?;";
-            pst = sql.connectDb().prepareStatement(query);
-            pst.setString(1, title);
-            pst.setInt(2, id);
-            if( pst.executeUpdate() !=0)
-            {
-            }
-            populateCatTable();
-            clearFields(); 
+            if (titleText.getText().isEmpty() | idText.getText().isEmpty()) {
+                showAlert(Alert.AlertType.WARNING, "Check Fields", "Please Enter into the fields to update");
+            } else {
+                String tempId = idText.getText();
+                int id = Integer.parseInt(tempId);
+                String title = titleText.getText();
+
+                String query = "UPDATE `categories` SET `Title` =? WHERE `categories`.`CategoryID` = ?;";
+                pst = Sql.connectDb().prepareStatement(query);
+                pst.setString(1, title);
+                pst.setInt(2, id);
+                if (pst.executeUpdate() != 0) {
+                }
+                populateCatTable();
+                clearFields();
             }
         } catch (SQLException ex) {
             Logger.getLogger(ManagerLandingPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     private void delCategory() {
         try {
-            if(titleText.getText().isEmpty()| idText.getText().isEmpty()){
-              showAlert(Alert.AlertType.WARNING, "Check Fields", "Please Enter into the fields to delete");
-            }
-            else{
-            String tempId= idText.getText();
-            int id = Integer.parseInt(tempId);
-            
-            String query = "DELETE FROM `categories` WHERE CategoryID=?";
-            pst = sql.connectDb().prepareStatement(query);
-            pst.setInt(1, id);
-            if( pst.executeUpdate() !=0)
-            {
-            }
-            populateCatTable();
-            clearFields();
+            if (titleText.getText().isEmpty() || idText.getText().isEmpty()) {
+                showAlert(Alert.AlertType.WARNING, "Check Fields", "Please Enter into the fields to delete");
+            } else {
+                if (this.sql.getCategory(Integer.valueOf(idText.getText()), titleText.getText()) != null) {
+                    int id = Integer.parseInt(idText.getText());
+
+                    String query = "DELETE FROM `categories` WHERE CategoryID=?";
+                    pst = Sql.connectDb().prepareStatement(query);
+                    pst.setInt(1, id);
+                    if (pst.executeUpdate() != 0) {
+                        
+                    }
+                    populateCatTable();
+                    clearFields();
+                } else {
+                    showAlert(Alert.AlertType.WARNING, "Check Fields", "This category does not exist.");
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(ManagerLandingPageController.class.getName()).log(Level.SEVERE, null, ex);
+            showAlert(Alert.AlertType.WARNING, "Error", "Cannot delete a category that still has questions in.");
         }
     }
-    
-    
-    
-    
+
     @FXML
     private void questionPage(ActionEvent event) throws IOException {
         SceneManager scene = new SceneManager();
         scene.switchScene("editNewCat");
     }
-           
+
     @FXML
     private void adminAccountPage(ActionEvent event) throws IOException {
         SceneManager scene = new SceneManager();
         scene.switchScene("CreateAdmin");
     }
-    
+
     private Optional<ButtonType> showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         return alert.showAndWait();
-        
+
     }
-    
+
     private void clearFields() {
         idText.clear();
         titleText.clear();
     }
-    
-     @FXML
+
+    @FXML
     private void logout(ActionEvent event) throws SQLException, Exception {
         SceneManager scene = new SceneManager();
         Optional<ButtonType> result = showAlert(Alert.AlertType.CONFIRMATION, "Confirm logout", "Are you sure you want to logout?");
@@ -211,7 +206,7 @@ public class ManagerLandingPageController implements Initializable {
             scene.switchScene("Login");
         }
     }
-    
+
     @FXML
     public void viewResults() throws IOException {
         scene.switchScene("ViewResults");

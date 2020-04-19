@@ -56,7 +56,7 @@ public class LoginController {
     private void login(ActionEvent event) throws SQLException, IOException {
         this.userId = (sql.validateLogin(loginEmail.getText(), loginPassword.getText()));
         if (this.userId > 0) {
-            boolean admin = this.sql.getUser(this.userId).isAdmin();
+            boolean admin = this.sql.getUserById(this.userId).isAdmin();
             if (admin) {
                 scene.switchScene("ManagerLandingPage");
             } else {
@@ -70,14 +70,22 @@ public class LoginController {
 
     @FXML
     private void register(ActionEvent event) throws SQLException {
-        if (sql.registerUser(registerFirstName.getText(), registerLastName.getText(), registerEmail.getText(), registerPassword.getText())) {
-            registerFirstName.clear();
-            registerLastName.clear();
-            registerEmail.clear();
-            registerPassword.clear();
-            showAlert(Alert.AlertType.INFORMATION, "Success", "You have successfully registered.");
+        if (registerFirstName.getText().isEmpty() == false && registerLastName.getText().isEmpty() == false && registerEmail.getText().isEmpty() == false && registerPassword.getText().isEmpty() == false) {
+            if (this.sql.getUserByEmail(registerEmail.getText()) == null) {
+                if (sql.registerUser(registerFirstName.getText(), registerLastName.getText(), registerEmail.getText(), registerPassword.getText())) {
+                    registerFirstName.clear();
+                    registerLastName.clear();
+                    registerEmail.clear();
+                    registerPassword.clear();
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "You have successfully registered.");
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Error: Check your information.");
+                }
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Error", "Error: A user already exists with this email.");
+            }
         } else {
-            showAlert(Alert.AlertType.ERROR, "Error", "Error: Check your information.");
+            showAlert(Alert.AlertType.ERROR, "Error", "Error: Please enter details for all fields in the registration form.");
         }
     }
 

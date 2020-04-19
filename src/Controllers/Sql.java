@@ -358,10 +358,10 @@ public class Sql {
         }
     }
 
-    public User getUser(int id) {
+    public User getUserByEmail(String email) {
         try {
-            PreparedStatement pst = conn.prepareStatement("SELECT * FROM users WHERE UserID=?");
-            pst.setInt(1, id);
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM users WHERE Email=? LIMIT 1");
+            pst.setString(1, email);
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
@@ -372,6 +372,25 @@ public class Sql {
                         rs.getString("Password"),
                         rs.getBoolean(6));
                 return user;
+            }
+            return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public Category getCategory(int id, String title) {
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM categories WHERE CategoryId=? AND Title=? LIMIT 1");
+            pst.setInt(1, id);
+            pst.setString(2, title);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                Category category = new Category(rs.getInt(1),
+                        rs.getString("Title"));
+                return category;
             }
             return null;
         } catch (SQLException ex) {
