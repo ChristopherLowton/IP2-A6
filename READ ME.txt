@@ -1,0 +1,4 @@
+In order to run this application, you will need to have
+MySQL and JConnector installed. After you have the Database
+running, run the included .sql file to create the tables
+and populate them.
